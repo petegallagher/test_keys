@@ -32,11 +32,5 @@ jobs:
       # Runs a set of commands using the runners shell
       - name: Run truffleHog and decorate the Pull Request
         run: |
-          trufflehog git file://$GITHUB_WORKSPACE \
-          --since-commit ${{ github.event.repository.default_branch }} \
-          --branch HEAD \
-          --fail \
-          --no-update \
-          --github-actions \
-          --debug \
-          --only-verified
+          trufflehog --version
+          trufflehog git file://$GITHUB_WORKSPACE --since-commit ${{ github.event.repository.default_branch }} --branch HEAD --fail --no-update --github-actions --debug --only-verified
