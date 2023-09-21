@@ -79,7 +79,7 @@ jobs:
 
       - name: Install awscli tools
         run: |
-          sudo apt -y install awscli
+          sudo apt -y install awscli coreutils
 
       - name: Upload Trufflehog output to S3
         run: |
