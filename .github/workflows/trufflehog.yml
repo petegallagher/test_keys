@@ -46,9 +46,9 @@ jobs:
           
           # Get Release asset
           gh api \
-            -H "Accept: application/vnd.github+json" \
+            -H "Accept: application/octet-stream" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/$OWNER/$REPO/releases/assets/$ASSET_ID
+            /repos/$OWNER/$REPO/releases/assets/$ASSET_ID > $ASSET_NAME
 
           # Extract binary
           tar xf $ASSET_NAME
