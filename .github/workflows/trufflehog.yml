@@ -51,21 +51,21 @@ jobs:
             /repos/$OWNER/$REPO/releases/assets/$ASSET_ID > $GITHUB_WORKSPACE/$ASSET_NAME
 
           echo ===  Extract release archive ===
-          tar xf --directory=$GITHUB_WORKSPACE $ASSET_NAME
+          tar xf $ASSET_NAME
           
           echo === Make exexutable ===
-          chmod +x $GITHUB_WORKSPACE/trufflehog
+          chmod +x ./trufflehog
 
           echo === List directory ===
-          ls -la $GITHUB_WORKSPACE
+          ls -la
 
           echo === Trufflehog version ===
-          $GITHUB_WORKSPACE/trufflehog --version
+          ./trufflehog --version
 
       # Runs a set of commands using the runners shell
       - name: Run truffleHog and decorate the Pull Request
         run: |
           echo `pwd`
           ls -la
-          $GITHUB_WORKSPACE/trufflehog --version
-          $GITHUB_WORKSPACE/trufflehog git file://$GITHUB_WORKSPACE --since-commit ${{ github.event.repository.default_branch }} --branch HEAD --fail --no-update --github-actions --debug --only-verified
+          ./trufflehog --version
+          ./trufflehog git file://$GITHUB_WORKSPACE --since-commit ${{ github.event.repository.default_branch }} --branch HEAD --fail --no-update --github-actions --debug --only-verified
