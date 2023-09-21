@@ -79,14 +79,14 @@ jobs:
 
       - name: Install awscli tools
         run: |
-          sudo apt -y install awscli coreutils
+          sudo apt -y install awscli
 
       - name: Upload Trufflehog output to S3
         run: |
           AWS_BUCKET_NAME=trufflehog-github-action-test
-          PATH=$(date +%Y/%m/%d)
+          PATH=$(/bin/date +%Y/%m/%d)
           SOURCE_FILENAME=trufflehog-output.json
-          DEST_FILENAME=$(date --iso-8601=seconds)-$SOURCE_FILENAME
+          DEST_FILENAME=$(/bin/date --iso-8601=seconds)-$SOURCE_FILENAME
           AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY}}
           AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY}}
           aws s3 cp $SOURCE_FILENAME s3://$AWS_BUCKET_NAME/$PATH/$DEST_FILENAME
