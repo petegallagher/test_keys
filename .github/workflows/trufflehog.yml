@@ -77,7 +77,7 @@ jobs:
           --no-update \
           --debug \
           --only-verified \
-          --json >> trufflehog-output.json
+          --json 2>&1 | tee trufflehog-output.json
 
       - name: Install awscli tools
         run: |
