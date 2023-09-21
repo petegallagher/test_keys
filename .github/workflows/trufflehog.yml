@@ -48,19 +48,24 @@ jobs:
           gh api \
             -H "Accept: application/octet-stream" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            /repos/$OWNER/$REPO/releases/assets/$ASSET_ID > $ASSET_NAME
+            /repos/$OWNER/$REPO/releases/assets/$ASSET_ID > $GITHUB_WORKSPACE/$ASSET_NAME
 
           echo ===  Extract release archive ===
-          tar xf $ASSET_NAME
+          tar xf --directory=$GITHUB_WORKSPACE $ASSET_NAME
           
           echo === Make exexutable ===
-          chmod +x trufflehog
+          chmod +x $GITHUB_WORKSPACE/trufflehog
 
           echo === List directory ===
-          ls -la
+          ls -la $GITHUB_WORKSPACE
+
+          echo === Trufflehog version ===
+          $GITHUB_WORKSPACE/trufflehog --version
 
       # Runs a set of commands using the runners shell
       - name: Run truffleHog and decorate the Pull Request
         run: |
-          trufflehog --version
-          trufflehog git file://$GITHUB_WORKSPACE --since-commit ${{ github.event.repository.default_branch }} --branch HEAD --fail --no-update --github-actions --debug --only-verified
+          echo `pwd`
+          ls -la
+          $GITHUB_WORKSPACE/trufflehog --version
+          $GITHUB_WORKSPACE/trufflehog git file://$GITHUB_WORKSPACE --since-commit ${{ github.event.repository.default_branch }} --branch HEAD --fail --no-update --github-actions --debug --only-verified
