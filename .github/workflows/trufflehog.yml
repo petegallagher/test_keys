@@ -37,23 +37,27 @@ jobs:
           OWNER=trufflesecurity
           REPO=trufflehog
           
-          # Get latest trufflehog release Asset ID and Name
+          echo === Get latest trufflehog release Asset ID and Name ===
           export $(gh api \
             -H "Accept: application/vnd.github+json" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             /repos/trufflesecurity/trufflehog/releases/latest \
             | jq -r '.assets [] | select(.name | contains("linux_amd64")) | @sh "ASSET_ID=\(.id) ASSET_NAME=\(.name)"')
           
-          # Get Release asset
+          echo === Get Release asset ===
           gh api \
             -H "Accept: application/octet-stream" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             /repos/$OWNER/$REPO/releases/assets/$ASSET_ID > $ASSET_NAME
 
-          # Extract binary
-          ls -la
+          echo ===  Extract release archive ===
           tar xf $ASSET_NAME
+          
+          echo === Make exexutable ===
           chmod +x trufflehog
+
+          echo === List directory ===
+          ls -la
 
       # Runs a set of commands using the runners shell
       - name: Run truffleHog and decorate the Pull Request
