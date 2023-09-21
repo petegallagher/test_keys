@@ -75,7 +75,6 @@ jobs:
           --branch HEAD \
           --fail \
           --no-update \
-          --debug \
           --only-verified \
           --json 2>&1 | tee trufflehog-output.json
 
