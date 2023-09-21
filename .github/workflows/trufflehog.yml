@@ -86,8 +86,9 @@ jobs:
 
       - name: Upload Trufflehog output to S3
         env:
-          AWS_ACCESS_KEY: ${{ secrets.TRUFFLEHOG_AWS_ACCESS_KEY }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.TRUFFLEHOG_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.TRUFFLEHOG_AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: eu-west-1
         run: |
           BUCKET_NAME=trufflehog-github-action-test
           PATH=$(/bin/date +%Y/%m/%d)
@@ -95,6 +96,5 @@ jobs:
           DEST_FILENAME=$(/bin/date --iso-8601=seconds)-$SOURCE_FILENAME
 
           echo === Upload to S3 ===
-          echo $AWS_ACCESS_KEY
           /usr/bin/aws s3 cp $SOURCE_FILENAME s3://$BUCKET_NAME/$PATH/$DEST_FILENAME
           
