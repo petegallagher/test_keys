@@ -51,8 +51,9 @@ jobs:
             /repos/$OWNER/$REPO/releases/assets/$ASSET_ID > $ASSET_NAME
 
           # Extract binary
-          tar xf $ASSET_NAME
-          chmod +x trufflehog
+          ls -la
+          # tar xf $ASSET_NAME
+          # chmod +x trufflehog
 
       # Runs a set of commands using the runners shell
       - name: Run truffleHog and decorate the Pull Request
